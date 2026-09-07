@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use DEGADISx, please cite it and the original EPA DEGADIS 2.1 report."
+title: "DEGADISx: a Python reimplementation of EPA DEGADIS 2.1"
+version: 0.1.0
+date-released: 2026-09-07
+authors:
+  - family-names: Lee
+    given-names: Ugwiyeon
+license: MIT
+repository-code: "https://github.com/lyullee/degadisx"
+references:
+  - type: report
+    authors:
+      - family-names: Spicer
+        given-names: Thomas O.
+      - family-names: Havens
+        given-names: Jerry A.
+    title: "User’s Guide for the DEGADIS 2.1 Dense Gas Dispersion Model"
+    institution: "U.S. Environmental Protection Agency"
+    number: "EPA-450/4-89-019"
+    year: 1989
