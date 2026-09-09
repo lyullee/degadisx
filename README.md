@@ -22,7 +22,7 @@ degadisx --help
 For a separately qualified LH2 pool source term, install the optional adapter:
 
 ```bash
-pip install "degadisx[pool]"
+pip install "lh2poolx @ git+https://github.com/lyullee/lh2poolx.git"
 ```
 
 `degadisx.lh2pool.source_table_from_lh2pool()` converts declared LH2PoolX
