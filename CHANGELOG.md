@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1 — 2026-09-09
+
+- Add an optional LH2PoolX adapter that converts qualified quasi-steady pool
+  source terms to the original DEGADIS ground-source table.
+- Refuse confined-pool and unresolved-inventory inputs rather than silently
+  treating them as a stationary ground source.
+
 ## 0.1.0 — 2026-09-07
 
 - First public release of the legacy DEGADIS 2.1 Python reimplementation.

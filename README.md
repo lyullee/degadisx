@@ -19,6 +19,17 @@ pip install .
 degadisx --help
 ```
 
+For a separately qualified LH2 pool source term, install the optional adapter:
+
+```bash
+pip install "degadisx[pool]"
+```
+
+`degadisx.lh2pool.source_table_from_lh2pool()` converts declared LH2PoolX
+time-window terms into the original ground-source-table convention. It refuses
+confined or non-equilibrium terms; it does not add an LH2 pool or jet-impact
+model to the reproduced DEGADIS physics.
+
 ## Reproduction evidence and data policy
 
 The implementation was checked against the EPA DEGADIS 2.1 reference distribution and published EPA benchmark listings. The quantitative audit, its limits, and exact source locations are in [docs/reproduction.md](docs/reproduction.md).
