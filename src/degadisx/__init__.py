@@ -5,7 +5,7 @@ DEGADIS 2.1 modelling route and its documented numerical conventions; it does
 not include the separate DEGALI liquid-hydrogen research extensions.
 """
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 from .source_ledger import SourceLedger, SourceState
 

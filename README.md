@@ -45,6 +45,19 @@ and time history. It rejects unresolved liquid fractions: flash, impact,
 droplet, and pool-inventory physics must be resolved upstream before the
 ground-layer route is started.
 
+## Directed JETPLU source handoff
+
+Version 0.1.3 also exposes
+`SourceLedger.to_directed_jet_initial_conditions()`. It converts one resolved,
+single-phase gas source-plane record into the existing JETPLU initial state;
+callers then run the normal JETPLU driver with that state. The adapter checks
+the declared H2/total-flow mass balance and rejects remaining liquid. It does
+not modify the JETPLU equations or the historical vertical `SETJET` route.
+
+The directed entry is a two-dimensional wind--vertical calculation. A yawed
+horizontal release or a cross-axis wind component is not converted into a
+three-dimensional fixed-receptor prediction by this interface.
+
 ## Citation
 
 Please cite both this software (see [CITATION.cff](CITATION.cff)) and the original model:

@@ -6,7 +6,7 @@ from degadisx.run import _require_legacy
 
 
 def test_public_version_and_legacy_route():
-    assert degadisx.__version__ == "0.1.2"
+    assert degadisx.__version__ == "0.1.3"
     _require_legacy(None)
     _require_legacy("legacy")
     with pytest.raises(ValueError, match="legacy"):

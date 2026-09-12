@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.3 — 2026-09-12
+
+- Add a checked `SourceLedger` adapter for an explicitly resolved directed
+  gas-jet source plane to the existing JETPLU initial-state interface.
+- Preserve the JETPLU core equations and legacy vertical route; reject liquid,
+  unbalanced, or non-directed source states before they enter the adapter.
+- Document the two-dimensional wind--vertical scope: this adapter does not
+  create a yawed three-dimensional receptor field.
+
 ## 0.1.2 — 2026-09-12
 
 - Add validated, JSON-serialisable `SourceLedger`/`SourceState` input handoff.

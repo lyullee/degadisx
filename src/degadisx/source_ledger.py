@@ -119,5 +119,59 @@ class SourceLedger:
             rho=np.zeros(len(active_time) + 2),
         )
 
+    def to_directed_jet_initial_conditions(
+        self, plume: Any, *, state_index: int = -1, wind_speed_m_s: float,
+        theta0_rad: float = 0.0, mass_balance_tolerance: float = 0.02,
+    ) -> np.ndarray:
+        """Create one explicit initial state for the existing JETPLU driver.
+
+        This is an input adapter, not a new JETPLU closure.  It passes a
+        resolved, single-phase source plane to
+        :meth:`degadisx.core.jetplume.JetPlume.initial_conditions_directed`,
+        after checking the declared source-plane mass balance.  The caller
+        then supplies the returned state directly to ``plume.run(y0, ...)``.
+
+        The JETPLU equations remain two-dimensional in the wind--vertical
+        plane.  A source bearing, horizontal yaw, or cross-axis wind must
+        therefore be resolved upstream; this adapter must not be used to
+        claim a three-dimensional fixed-receptor field.
+        """
+        if self.stage not in {"gas_handoff", "near_field_handoff"}:
+            raise ValueError("ledger stage is not a directed gas-jet handoff")
+        if wind_speed_m_s <= 0.0:
+            raise ValueError("wind_speed_m_s must be positive")
+        if not -math.pi / 2.0 <= theta0_rad <= math.pi / 2.0:
+            raise ValueError("theta0_rad must be between vertically downward and upward")
+        if not 0.0 <= mass_balance_tolerance < 1.0:
+            raise ValueError("mass_balance_tolerance must be in [0, 1)")
+        try:
+            state = self.states[state_index]
+        except IndexError as exc:
+            raise ValueError("state_index is outside the source ledger") from exc
+        if state.liquid_fraction > 1e-12:
+            raise ValueError("resolve liquid fraction before creating a directed jet state")
+        if state.h2_rate_kg_s <= 0.0 or state.h2_mass_fraction <= 0.0:
+            raise ValueError("directed jet state requires positive H2 rate and mass fraction")
+        if state.velocity_m_s <= 0.0:
+            raise ValueError("directed jet state requires a declared positive velocity")
+        total_rate = state.h2_rate_kg_s / state.h2_mass_fraction
+        declared_rate = state.density_kg_m3 * state.area_m2 * state.velocity_m_s
+        residual = abs(declared_rate - total_rate) / total_rate
+        if residual > mass_balance_tolerance:
+            raise ValueError(
+                "directed jet source-plane mass residual "
+                f"{residual:.3%} exceeds {mass_balance_tolerance:.3%}"
+            )
+        diameter = math.sqrt(4.0 * state.area_m2 / math.pi)
+        return plume.initial_conditions_directed(
+            erate=state.h2_rate_kg_s,
+            diajet=diameter,
+            elejet=state.height_m,
+            ua=wind_speed_m_s,
+            theta0=theta0_rad,
+            rho_exit=state.density_kg_m3,
+            concentration=state.h2_mass_fraction,
+        )
+
 
 __all__ = ["SourceState", "SourceLedger"]
