@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.2 — 2026-09-12
+
+- Add validated, JSON-serialisable `SourceLedger`/`SourceState` input handoff.
+- Add explicit conversion from a resolved ledger to DEGADIS source tables.
+- Reject unresolved liquid source states rather than treating them as gas-only.
+
 ## 0.1.1 — 2026-09-09
 
 - Add an optional LH2PoolX adapter that converts qualified quasi-steady pool

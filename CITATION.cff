@@ -1,8 +1,8 @@
 cff-version: 1.2.0
 message: "If you use DEGADISx, please cite it and the original EPA DEGADIS 2.1 report."
 title: "DEGADISx: a Python reimplementation of EPA DEGADIS 2.1"
-version: 0.1.0
-date-released: 2026-09-07
+version: 0.1.2
+date-released: 2026-09-12
 authors:
   - family-names: Lee
     given-names: Ugwiyeon

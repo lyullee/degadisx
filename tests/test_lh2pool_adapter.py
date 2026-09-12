@@ -3,7 +3,11 @@ import pytest
 
 pytest.importorskip("lh2poolx")
 
-from lh2poolx import LH2Release, evaluate_pool_source
+from lh2poolx import (
+    LH2Release,
+    evaluate_observed_footprint_source,
+    evaluate_pool_source,
+)
 from degadisx.lh2pool import source_table_from_lh2pool
 
 
@@ -23,3 +27,12 @@ def test_adapter_refuses_confined_terms():
                                 elapsed_s=30.0)
     with pytest.raises(ValueError, match="inventory"):
         source_table_from_lh2pool([term], duration_s=60.0)
+
+
+def test_adapter_preserves_a_declared_observed_footprint():
+    term = evaluate_observed_footprint_source(
+        equivalent_radius_m=0.5, elapsed_s=60.0
+    )
+    table = source_table_from_lh2pool([term], duration_s=120.0)
+    assert table.radius_at(60.0) == pytest.approx(term.equivalent_radius_m)
+    assert table.rate_at(60.0) == pytest.approx(term.evaporation_rate_kg_s)

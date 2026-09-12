@@ -36,6 +36,15 @@ The implementation was checked against the EPA DEGADIS 2.1 reference distributio
 
 This repository deliberately contains **no** third-party Fortran source, EPA input/output decks, experimental measurements, reduced observation data, or PDFs. See [docs/data-policy.md](docs/data-policy.md).
 
+## Source-ledger handoff
+
+Version 0.1.2 adds `degadisx.SourceLedger` and `SourceState`, a model-neutral
+record for a resolved source-plane state. The adapter converts H2 contaminant
+rate and mass fraction into DEGADIS source-table rows while preserving area
+and time history. It rejects unresolved liquid fractions: flash, impact,
+droplet, and pool-inventory physics must be resolved upstream before the
+ground-layer route is started.
+
 ## Citation
 
 Please cite both this software (see [CITATION.cff](CITATION.cff)) and the original model:
