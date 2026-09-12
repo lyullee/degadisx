@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.4 — 2026-09-12
+
+- Make `SourceLedger.to_source_table()` emit the required source-on row at
+  time zero by carrying the first declared source state to the beginning of
+  its declared source window.
+- Retain the original positive ledger timestamps and all gas/liquid checks;
+  this is an input-adapter correction, not a new dispersion closure.
+
 ## 0.1.3 — 2026-09-12
 
 - Add a checked `SourceLedger` adapter for an explicitly resolved directed

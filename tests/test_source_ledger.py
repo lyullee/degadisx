@@ -10,6 +10,9 @@ def test_ledger_maps_h2_rate_to_total_degadis_rate():
     )
     table = ledger.to_source_table()
     assert np.isclose(table.rate[0], 0.4)
+    assert np.isclose(table.time[0], 0.0)
+    assert np.isclose(table.time[1], 10.0)
+    assert np.isclose(table.rate[1], 0.4)
     assert np.isclose(table.wc[0], 0.5)
     assert np.isclose(table.radius[0], (1.0 / np.pi) ** 0.5)
 

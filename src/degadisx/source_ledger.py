@@ -101,6 +101,17 @@ class SourceLedger:
         total_rate = h2_rate / frac
         radius = np.asarray([math.sqrt(s.area_m2 / math.pi) for s in self.states])
         temp = np.asarray([s.temperature_K for s in self.states], dtype=float)
+        # A ledger records resolved source *states*, whose timestamps are
+        # strictly positive.  ``SourceTable`` instead needs an explicit
+        # source-on row at t=0.  Preserve the declared first state (rather
+        # than extrapolating a new source condition) and expose it from the
+        # start of the source window.
+        if time[0] > 0.0:
+            time = np.insert(time, 0, 0.0)
+            total_rate = np.insert(total_rate, 0, total_rate[0])
+            frac = np.insert(frac, 0, frac[0])
+            radius = np.insert(radius, 0, radius[0])
+            temp = np.insert(temp, 0, temp[0])
         active_time = time if time[-1] >= self.duration_s else np.append(time, self.duration_s)
         if len(active_time) > len(time):
             total_rate = np.append(total_rate, total_rate[-1])
